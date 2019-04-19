@@ -28,11 +28,7 @@ public class Pro {
         }
     }
 
-    /**
-     * 初始化codes数组
-     *
-     * @return
-     */
+
     private void divide(Node[] pro) {
         if (pro.length == 1) {
             return;
