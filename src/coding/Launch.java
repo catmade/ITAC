@@ -12,7 +12,6 @@ public class Launch extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Home.class.getResource("home.fxml"));
-        ;
 
         stage.setTitle("三种编码");
         stage.setScene(new Scene(root));
