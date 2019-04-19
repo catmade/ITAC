@@ -39,15 +39,6 @@ public class Pro {
         divide(getSecond(pro, middleIndex));
     }
 
-
-    public int[] getP() {
-        return p;
-    }
-
-    public String[] getCodes() {
-        return codes;
-    }
-
     /**
      * 得到数组的第一组
      *
