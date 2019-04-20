@@ -8,7 +8,7 @@ package coding;
 public class Node {
 
     /**
-     * 概率用
+     * 概率
      */
     public double p;
 

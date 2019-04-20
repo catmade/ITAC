@@ -1,6 +1,7 @@
 package coding;
 
 import coding.fano.Fano;
+import coding.shannon.Shannon;
 import coding.ui.Home;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,5 +26,9 @@ public class Launch extends Application {
         //double a = 0.3;
         //System.out.println(a);
         //0.25 0.25 0.2 0.15 0.10 0.05
+
+        //Shannon测试
+        //double dous[]={0.25,0.25,0.20,0.15,0.10,0.05};
+        //new Shannon(dous);
     }
 }
