@@ -12,14 +12,18 @@ public class Launch extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Home.class.getResource("home.fxml"));
-
         stage.setTitle("三种编码");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
     public static void main(String[] args) {
-        //launch(args);
-        new Fano(new int[]{2500, 2500, 1250, 1250, 625, 625, 625, 625}, 1000);
+        launch(args);
+//        int[] ints = {2500, 250 ty0, 1250, 1250, 625, 625, 625, 625};
+//        new Fano(ints, 1000);
+//        String  s = "";
+        //double a = 0.3;
+        //System.out.println(a);
+        //0.25 0.25 0.2 0.15 0.10 0.05
     }
 }

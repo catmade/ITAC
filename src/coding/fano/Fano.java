@@ -12,24 +12,21 @@ public class Fano {
     private Node[] nodes;
 
     /**
-     * @param p 概率
-     * @return void
-     * @description 初始化
-     * @author Seven
-     * @date 2019/4/19
+     * 构造函数
+     * @param p 整型数组
      */
-    public Fano(int[] p, int den) {
+    public Fano(double[] p) {
         nodes = new Node[p.length];
         for(int i = 0; i < nodes.length; i++){
-            nodes[i] = new Node(den, p[i], i);
+            nodes[i] = new Node(p[i], i);
         }
         divide(nodes);
-        for(Node node : nodes) {
-            System.out.print(node.codes + " ");
-        }
     }
 
-
+    /**
+     * 用递归对数据进行分组并编码
+     * @param ns 数据节点，由概率、下标、编码组成
+     */
     private void divide(Node[] ns) {
         if (ns.length == 1) {
             return;
@@ -90,11 +87,10 @@ public class Fano {
      * @params p 整型数组
      */
     private int findMiddleIndex(Node[] ns) {
-        int[] delta = new int[ns.length];
-        int min = 0;
-        for (Node node : ns) {
-            min += node.p;
-        }
+        double[] delta = new double[ns.length];
+        //设min为无穷大，这里因为概率之和为一，大于1的数都可认为是无穷大
+        double min = 10;
+
         int resultIndex = 0;
         for (int i = 0; i < ns.length - 1; i++) {
             delta[i] = getDelte(ns, i);
@@ -114,8 +110,8 @@ public class Fano {
      * @params p 数组
      * @params middleIndex 分割位置，middleIndex后的数组为一组，其他的为前一组
      */
-    private int getDelte(Node[] ns, int middleIndex) {
-        int first = 0, second = 0;
+    private double getDelte(Node[] ns, int middleIndex) {
+        double first = 0, second = 0;
         for (int i = 0; i <= middleIndex; i++) {
             first += ns[i].p;
         }
@@ -125,7 +121,13 @@ public class Fano {
         return Math.abs(first - second);
     }
 
-
+    /**
+     * 获得节点数组
+     * @return 节点数组
+     */
+    public Node[] getNodes() {
+        return nodes;
+    }
 }
 
 
