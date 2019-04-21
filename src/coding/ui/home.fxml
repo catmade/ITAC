@@ -18,7 +18,20 @@
           </Tab>
           <Tab text="费诺编码">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tabFano" prefHeight="418.0" prefWidth="800.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn fx:id="colFanoSymbol" prefWidth="75.0" text="信源符号" />
+                              <TableColumn fx:id="colFanoP" prefWidth="75.0" text="概率" />
+                              <TableColumn prefWidth="75.0" text="编码" />
+                              <TableColumn prefWidth="75.0" text="码长" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="赫夫曼编码">
