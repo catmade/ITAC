@@ -11,7 +11,7 @@ import coding.Node;
     0.05    0.950   5   11110
  */
 
-class ShannonNode extends Node {
+public class ShannonNode extends Node {
     /**
      * 第i个码字累加概率
      */

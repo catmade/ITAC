@@ -12,7 +12,24 @@
             <tabs>
                 <Tab text="香农编码">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tabShannon" prefHeight="418.0" prefWidth="800.0"
+                                           AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="colShannonSymbol" prefWidth="50" text="ai"/>
+                                        <TableColumn fx:id="colShannonP" prefWidth="50" text="p(ai)"/>
+                                        <TableColumn fx:id="colShannonpa" prefWidth="50" text="p(aj)"/>
+                                        <TableColumn fx:id="colShannonLength" prefWidth="50" text="ki"/>
+                                        <TableColumn fx:id="colShannonCodes" prefWidth="50" text="码字"/>
+                                    </columns>
+                                    <columnResizePolicy>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                    </columnResizePolicy>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="费诺编码">
@@ -39,21 +56,19 @@
                 <Tab text="赫夫曼编码">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TableView fx:id="tabShannon" prefHeight="418.0" prefWidth="800.0"
-                                           AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0"
-                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <columns>
-                                        <TableColumn fx:id="colShannonSymbol" prefWidth="50" text="ai"/>
-                                        <TableColumn fx:id="colShannonP" prefWidth="50" text="p(ai)"/>
-                                        <TableColumn fx:id="colShannonCodes" prefWidth="50" text="ma'zi"/>
-                                        <TableColumn fx:id="colShannonLength" prefWidth="50" text="码长"/>
-                                    </columns>
-                                    <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-                                    </columnResizePolicy>
-                                </TableView>
-                            </children>
+                            <TableView fx:id="tabHuffman" prefHeight="418.0" prefWidth="800.0"
+                                       AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0"
+                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                    <TableColumn fx:id="colHuffmanSymbol" prefWidth="50" text="信源符号"/>
+                                    <TableColumn fx:id="colHuffmanP" prefWidth="50" text="概率"/>
+                                    <TableColumn fx:id="colHuffmanCodes" prefWidth="50" text="编码"/>
+                                    <TableColumn fx:id="colHuffmanLength" prefWidth="50" text="码长"/>
+                                </columns>
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                </columnResizePolicy>
+                            </TableView>
                         </AnchorPane>
                     </content>
                 </Tab>
