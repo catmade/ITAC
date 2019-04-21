@@ -5,13 +5,14 @@ import coding.fano.Fano;
 import coding.shannon.Shannon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class Home {
@@ -22,6 +23,11 @@ public class Home {
     private Fano fano;
 
     /**
+     * 费诺编码填充数据
+     */
+    private ObservableList<Node> fanoData;
+
+    /**
      * 香农编码
      */
     private Shannon shannon;
@@ -30,8 +36,6 @@ public class Home {
      * 表格的填充数据
      */
     private ObservableList<Node> tabData;
-
-    private String[] symbols;
 
     private double[] doubles;
 
@@ -51,7 +55,7 @@ public class Home {
     private TextArea editorInput;
 
     @FXML
-    private TableView<?> tabFano;
+    private TableView<Node> tabFano;
 
     @FXML
     private TableColumn<Node, String> colFanoSymbol;
@@ -60,32 +64,27 @@ public class Home {
     private TableColumn<Node, Double> colFanoP;
 
     @FXML
+    private TableColumn<Node, String> colFanoCodes;
+
+    @FXML
+    private TableColumn<Node, Integer> colFanoLength;
+
+    @FXML
     void initialize() {
         assert btnBegin != null : "fx:id=\"btnBegin\" was not injected: check your FXML file 'home.fxml'.";
         assert editorInput != null : "fx:id=\"editorInput\" was not injected: check your FXML file 'home.fxml'.";
-        assert colFanoSymbol != null : "fx:id=\"colFanoSymbol\" was not injected: check your FXML file 'home.fxml'.";
         assert warning != null : "fx:id=\"warning\" was not injected: check your FXML file 'home.fxml'.";
+
         assert tabFano != null : "fx:id=\"tabFano\" was not injected: check your FXML file 'home.fxml'.";
+        assert colFanoSymbol != null : "fx:id=\"colFanoSymbol\" was not injected: check your FXML file 'home.fxml'.";
         assert colFanoP != null : "fx:id=\"colFanoP\" was not injected: check your FXML file 'home.fxml'.";
+        assert colFanoCodes != null : "fx:id=\"colFanoCodes\" was not injected: check your FXML file 'home.fxml'.";
+        assert colFanoLength != null : "fx:id=\"colFanoLength\" was not injected: check your FXML file 'home.fxml'.";
+
+
 
         btnBegin.setOnMouseClicked(this::beginEncode);
-
     }
-
-    private void fillShannonTable() {
-
-    }
-
-    private void fillFanoTable() {
-        Node[] nodes = fano.getNodes();
-        for (Node node : nodes) {
-            System.out.println(node.codes);
-        }
-        colFanoSymbol.setOnEditCancel(
-                (EventHandler<TableColumn.CellEditEvent<Node, String>>)
-                        new PropertyValueFactory<Node, Double>("p"));
-    }
-
 
     private void stringToDouble(String[] stringNums) throws NumberFormatException, Exception {
         double count = 0;
@@ -99,15 +98,8 @@ public class Home {
         }
     }
 
-    public ObservableList<Node> getFanoNodes() {
-        ObservableList<Node> products = FXCollections.observableArrayList();
-        products.addAll(fano.getNodes());
-        return getFanoNodes();
-    }
-
     private void beginEncode(MouseEvent event) {
         String s = editorInput.getText();
-
         //检查是否全为数字
         boolean allNumber = true;
         char[] cs = s.toCharArray();
@@ -126,11 +118,7 @@ public class Home {
             try {
                 stringToDouble(stringNums);
                 warning.setVisible(false);
-                fano = new Fano(doubles);
-                shannon = new Shannon(doubles);
-                for (int i = 0; i < doubles.length; i++) {
-                    symbols[i] = "a" + (i + 1);
-                }
+                readyToFill();
                 fillFanoTable();
                 fillShannonTable();
             } catch (NumberFormatException e) {
@@ -140,6 +128,46 @@ public class Home {
             }
         }
     }
+
+    /**
+     * 填充数据前的准备，需要先初始化对象
+     */
+    private void readyToFill() {
+        fano = new Fano(doubles);
+        shannon = new Shannon(doubles);
+        for (int i = 0; i < doubles.length; i++) {
+            fano.setNodesSymbol(i, "a" + (i + 1));
+            shannon.setNodesSymbol(i, "a" + (i + 1));
+        }
+        fanoData = FXCollections.observableArrayList(
+                new ArrayList<Node>(Arrays.asList(fano.getNodes()))
+        );
+    }
+
+    /**
+     * 填充Shannon编码表格
+     */
+    private void fillShannonTable() {
+
+    }
+
+    /**
+     * 填充Fano编码表格
+     */
+    private void fillFanoTable() {
+        Node[] nodes = fano.getNodes();
+        System.out.print("fano codes:");
+        for (Node node : nodes) {
+            System.out.print(node.codes);
+        }
+        colFanoSymbol.setCellValueFactory(new PropertyValueFactory<>("symbol"));
+        colFanoP.setCellValueFactory(new PropertyValueFactory<>("p"));
+        colFanoCodes.setCellValueFactory(new PropertyValueFactory<>("codes"));
+        colFanoLength.setCellValueFactory(new PropertyValueFactory<>("ki"));
+
+        tabFano.setItems(fanoData);
+    }
+
 }
 
 

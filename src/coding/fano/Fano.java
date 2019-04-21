@@ -21,6 +21,9 @@ public class Fano {
             nodes[i] = new Node(p[i], i);
         }
         divide(nodes);
+        for (int i = 0; i < nodes.length; i++){
+            nodes[i].ki = nodes[i].codes.length();
+        }
     }
 
     /**
@@ -127,6 +130,15 @@ public class Fano {
      */
     public Node[] getNodes() {
         return nodes;
+    }
+
+    /**
+     * 为每个节点赋值一个符号名称
+     * @param index 节点的下标
+     * @param symbol 符号
+     */
+    public void setNodesSymbol(int index, String symbol) {
+        this.nodes[index].symbol = symbol;
     }
 }
 

@@ -4,7 +4,7 @@ package coding.shannon;
 
 public class Shannon {
 
-    private ShannonNode nodes[];
+    private ShannonNode[] nodes;
 
     //将double转换为二进制，返回String bin
     private String doubleToBinaryString(double d,int length) {
@@ -55,7 +55,16 @@ public class Shannon {
         }
     }
 
-    public ShannonNode[] Getter(){
+    public ShannonNode[] getNodes() {
         return nodes;
+    }
+
+    /**
+     * 为每个节点赋值一个符号名称
+     * @param index 节点的下标
+     * @param symbol 符号
+     */
+    public void setNodesSymbol(int index, String symbol) {
+        this.nodes[index].symbol = symbol;
     }
 }

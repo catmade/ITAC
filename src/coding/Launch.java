@@ -29,6 +29,6 @@ public class Launch extends Application {
 
         //Shannon测试
         //double dous[]={0.25,0.25,0.20,0.15,0.10,0.05};
-        //new Shannon(dous);
+        //new Shannon(dous).showCodes();
     }
 }
