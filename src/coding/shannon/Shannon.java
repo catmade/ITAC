@@ -44,23 +44,9 @@ public class Shannon {
         }
         //编码,并将结果保存在nodes[]里
         encodingShannon();
-
-        showCodes();
     }
 
-    //将编码以及码位打印到屏幕上
-    public void showCodes()
-    {
-        for (int i=0;i<nodes.length;i++)
-        {
-            System.out.print(nodes[i].aj + " ");
-        }
-        System.out.println();
-        for (int i=0;i<nodes.length;i++)
-        {
-            System.out.print(nodes[i].codes + " ");
-        }
-    }
+
 
     public ShannonNode[] getNodes() {
         return nodes;
