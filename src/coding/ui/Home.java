@@ -151,6 +151,7 @@ public class Home {
         doubles = new double[stringNums.length];
         for (int i = 0; i < doubles.length; i++) {
             doubles[i] = Double.parseDouble(stringNums[i]);
+            doubles[i] = Math.round(doubles[i] * 1000000000) / 1000000000F;
             count += doubles[i];
         }
         if (count != 1) {
