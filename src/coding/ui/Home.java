@@ -15,7 +15,6 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class Home {
@@ -146,16 +145,12 @@ public class Home {
         btnBegin.setOnMouseClicked(this::beginEncode);
     }
 
-    private void stringToDouble(String[] stringNums) throws Exception {
-        double count = 0;
+    private void stringToDouble(String[] stringNums) {
         doubles = new double[stringNums.length];
         for (int i = 0; i < doubles.length; i++) {
             doubles[i] = Double.parseDouble(stringNums[i]);
-            doubles[i] = Math.round(doubles[i] * 1000000000) / 1000000000F;
-            count += doubles[i];
-        }
-        if (count != 1) {
-            throw new Exception("概率之和不为等于1");
+            //规避浮点数陷阱
+            doubles[i] = Math.round(doubles[i] * 1000000000) / 1000000000.0;
         }
     }
 
@@ -165,10 +160,11 @@ public class Home {
         boolean allNumber = true;
         char[] cs = s.toCharArray();
         for (int i = 0; i < s.length(); i++) {
-            if (cs[i] == '\t' || cs[i] == '\n' || cs[i] == ' ' || (cs[i] >= '0' && cs[i] <= '9')) {
+            if (cs[i] == '\t' || cs[i] == '\n' || cs[i] == ' ' || cs[i] == '.' || (cs[i] >= '0' && cs[i] <= '9')) {
                 allNumber = true;
             } else {
                 allNumber = false;
+                break;
             }
         }
         if (!allNumber) {
@@ -176,34 +172,22 @@ public class Home {
         } else {
             //“\\s+”正则表达式，可以匹配所有空格、\n和\t;
             String[] stringNums = s.split("\\s+");
-            try {
-                stringToDouble(stringNums);
-                warning.setVisible(false);
+            stringToDouble(stringNums);
+            warning.setVisible(false);
 
-                Arrays.sort(doubles);
-                double temp;
-                for (int i = 0; i < doubles.length / 2; i++) {
-                    temp = doubles[i];
-                    doubles[i] = doubles[doubles.length - 1 - i];
-                    doubles[doubles.length - 1 - i] = temp;
-                }
-
-                readyToFill();
-                setFanoTableCol();
-                setShannonTableCol();
-                setHuffmanTableCol();
-                tabHuffman.notifyAll();
-                tabFano.notifyAll();
-                tabShannon.notifyAll();
-            } catch (Exception e) {
-                if (e.getMessage().equals("概率之和不为等于1")) {
-                    warning.setVisible(true);
-                    warning.setText("概率之和不等于1，请核对数据");
-                }
+            Arrays.sort(doubles);
+            double temp;
+            for (int i = 0; i < doubles.length / 2; i++) {
+                temp = doubles[i];
+                doubles[i] = doubles[doubles.length - 1 - i];
+                doubles[doubles.length - 1 - i] = temp;
             }
+            readyToFill();
+            setFanoTableCol();
+            setShannonTableCol();
+            setHuffmanTableCol();
         }
     }
-
 
     /**
      * 填充数据前的准备，需要先初始化对象
@@ -226,7 +210,6 @@ public class Home {
         huffmanData = FXCollections.observableArrayList(
                 new ArrayList<>(Arrays.asList(huffman.getNodes()))
         );
-
     }
 
     /**
@@ -260,12 +243,10 @@ public class Home {
         colFanoP.setCellValueFactory(new PropertyValueFactory<>("p"));
         colFanoCodes.setCellValueFactory(new PropertyValueFactory<>("codes"));
         colFanoLength.setCellValueFactory(new PropertyValueFactory<>("ki"));
-
         tabFano.setItems(fanoData);
     }
 
 }
-
 
 
 

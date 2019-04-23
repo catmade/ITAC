@@ -1,8 +1,9 @@
 package coding.huffman;
 
 import coding.Node;
-import coding.huffman.HuffmanTreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 /**
@@ -12,6 +13,8 @@ import java.util.PriorityQueue;
  */
 public class Huffman {
     private Node[] nodes;
+
+    private List<Integer> help;
 
     private void encodingHuffman() {
         //初始化优先级队列
@@ -42,44 +45,38 @@ public class Huffman {
             pq.add(nodeParent);
         }
         HuffmanTreeNode rootNode = (HuffmanTreeNode) pq.poll();
-        showTree(rootNode,"0");
+        showTree(rootNode,"");
 
 
     }
 
-    public void showTree(HuffmanTreeNode node,String formerCodes) {
+    private void showTree(HuffmanTreeNode node, String formerCodes) {
         if (node.getLeft() == null&&node.getRight()==null) {
-            //TODO 最后一位编码加入
-            System.out.println(formerCodes + " ");
+            for(int i = 0; i < nodes.length; i++){
+                if(nodes[i].getP() == node.getP()){
+                    if(help.indexOf(i) == -1){
+                        help.add(i);
+                        nodes[i].setCodes(formerCodes);
+                        break;
+                    }
+                }
+            }
         } else {
-            if (node.getP()==1){
-                showTree(node.getRight(),formerCodes);
-                showTree(node.getLeft(),formerCodes);
-            }
-            else{
-                showTree(node.getRight(),formerCodes + "0");
-                showTree(node.getLeft(),formerCodes+"1");
-            }
+            showTree(node.getRight(),formerCodes + "0");
+            showTree(node.getLeft(),formerCodes+"1");
         }
 
     }
 
     public Huffman(double[] p) {
         nodes = new Node[p.length];
+        help = new ArrayList<>();
         for (int i = 0; i < p.length; i++) {
             nodes[i] = new Node(p[i], 0);
         }
         encodingHuffman();
-        //showCodes();
-    }
-
-    public void showCodes() {
-        for (int i = 0; i < nodes.length; i++) {
-            System.out.print(nodes[i].p + " ");
-        }
-        System.out.println();
-        for (int i = 0; i < nodes.length; i++) {
-            System.out.print(nodes[i].codes + " ");
+        for (Node node : nodes) {
+            node.ki = node.codes.length();
         }
     }
 
@@ -95,9 +92,5 @@ public class Huffman {
      */
     public void setNodesSymbol(int index, String symbol) {
         this.nodes[index].symbol = symbol;
-    }
-
-    public static void main(String[] args) {
-        new Huffman(new double[]{0.25,0.25,0.2,0.15,0.10,0.05});
     }
 }

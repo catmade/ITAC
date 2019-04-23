@@ -75,4 +75,5 @@ public class Node {
     public void setKi(int ki) {
         this.ki = ki;
     }
+
 }

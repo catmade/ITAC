@@ -12,14 +12,14 @@ public class Shannon {
 
     //将double转换为二进制，返回String bin
     private String doubleToBinaryString(double d,int length) {
-        String bin="";
+        StringBuilder bin= new StringBuilder();
         for (int i=0;i<length;i++) {
-            bin += (int)Math.floor(d*2);
+            bin.append((int) Math.floor(d * 2));
             d=d*2-Math.floor(d*2);
         }
-        return bin;
+        return bin.toString();
     }
-    public double toDouble(double p){
+    private double toDouble(double p){
         return (double)(Math.round(p*1000000000)/1000000000.0);
     }
     //计算香农编码

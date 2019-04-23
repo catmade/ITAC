@@ -21,8 +21,8 @@ public class Fano {
             nodes[i] = new Node(p[i], i);
         }
         divide(nodes);
-        for (int i = 0; i < nodes.length; i++){
-            nodes[i].ki = nodes[i].codes.length();
+        for (Node node : nodes) {
+            node.ki = node.codes.length();
         }
     }
 
@@ -106,12 +106,10 @@ public class Fano {
     }
 
     /**
+     * 整型数组分成两组后，求两组和的差
+     * @param ns 节点数组
+     * @param middleIndex 分割位置，middleIndex后的数组为一组，其他的为前一组
      * @return 两组差值
-     * @description 整型数组分成两组后，求两组和的差
-     * @author Seven
-     * @date 2019/4/19
-     * @params p 数组
-     * @params middleIndex 分割位置，middleIndex后的数组为一组，其他的为前一组
      */
     private double getDelte(Node[] ns, int middleIndex) {
         double first = 0, second = 0;
