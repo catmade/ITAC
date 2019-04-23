@@ -1,5 +1,7 @@
 package coding;
 
+import javafx.beans.property.StringProperty;
+
 /**
  * @description 概率模型的每个节点
  * @author Seven
@@ -7,14 +9,14 @@ package coding;
  */
 public class Node {
     /**
-     * 概率用分数表示，取分母
+     * 每个节点的符号
      */
-    public int denominator;
+    public String symbol;
 
     /**
-     * 概率用分数表示，取分子
+     * 概率
      */
-    public int p;
+    public double p;
 
     /**
      * 计算完成后的编码
@@ -22,20 +24,56 @@ public class Node {
     public String codes;
 
     /**
-     * 计算完成后的编码
+     * 码长
+     */
+    public int ki = 0;
+
+    /**
+     * 当前节点的下标（fano编码使用）
      */
     public int index;
 
     /**
      * 创建一个节点
-     * @param denominator 概率的分数形式的分子
-     * @param p 概率的分数形式的分子
+     * @param p 概率
      * @param index 当前节点的下标
      */
-    public Node(int denominator, int p, int index) {
+    public Node(double p, int index) {
         codes = "";
-        this.denominator = denominator;
         this.p = p;
         this.index = index;
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public double getP() {
+        return p;
+    }
+
+    public void setP(double p) {
+        this.p = p;
+    }
+
+    public String getCodes() {
+        return codes;
+    }
+
+    public void setCodes(String codes) {
+        this.codes = codes;
+    }
+
+    public int getKi() {
+        return ki;
+    }
+
+    public void setKi(int ki) {
+        this.ki = ki;
+    }
+
 }
