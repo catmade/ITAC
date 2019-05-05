@@ -1,5 +1,6 @@
 package coding.fano;
 
+import coding.Code;
 import coding.Node;
 
 /**
@@ -7,7 +8,7 @@ import coding.Node;
  * @description 费诺编码
  * @date 2019-04-19
  */
-public class Fano {
+public class Fano extends Code {
 
     private Node[] nodes;
 
@@ -21,9 +22,7 @@ public class Fano {
             nodes[i] = new Node(p[i], i);
         }
         divide(nodes);
-        for (Node node : nodes) {
-            node.ki = node.codes.length();
-        }
+        initData(nodes);
     }
 
     /**

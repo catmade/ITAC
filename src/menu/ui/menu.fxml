@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="apRoot" prefHeight="330.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="menu.ui.Menu">
+   <children>
+      <Button fx:id="btnCoding" layoutX="100.0" layoutY="50.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" text="三种编码">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="100.0" layoutY="140.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" text="待定">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="100.0" layoutY="230.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" text="待定">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

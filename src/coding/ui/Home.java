@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/**
+ * @author Seven
+ * @description 编码界面的控制类
+ * @date 2019-05-05
+ */
 public class Home {
 
     /**
@@ -118,6 +123,33 @@ public class Home {
     private TableColumn<ShannonNode, String> colShannonCodes;
 
     @FXML
+    private Label lbShannonHx;
+
+    @FXML
+    private Label lbShannonK;
+
+    @FXML
+    private Label lbShannonP;
+
+    @FXML
+    private Label lbFanoHx;
+
+    @FXML
+    private Label lbFanoK;
+
+    @FXML
+    private Label lbFanoP;
+
+    @FXML
+    private Label lbHuffmanHx;
+
+    @FXML
+    private Label lbHuffmanK;
+
+    @FXML
+    private Label lbHuffmanP;
+
+    @FXML
     void initialize() {
         assert btnBegin != null : "fx:id=\"btnBegin\" was not injected: check your FXML file 'home.fxml'.";
         assert editorInput != null : "fx:id=\"editorInput\" was not injected: check your FXML file 'home.fxml'.";
@@ -142,6 +174,16 @@ public class Home {
         assert colShannonLength != null : "fx:id=\"colShannonLength\" was not injected: check your FXML file 'home.fxml'.";
         assert colShannonCodes != null : "fx:id=\"colShannonCodes\" was not injected: check your FXML file 'home.fxml'.";
 
+        assert lbShannonHx != null : "fx:id=\"lbShannonHx\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbShannonK != null : "fx:id=\"lbShannonK\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbShannonP != null : "fx:id=\"lbShannonP\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbFanoHx != null : "fx:id=\"lbFanoHx\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbFanoK != null : "fx:id=\"lbFanoK\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbFanoP != null : "fx:id=\"lbFanoP\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbHuffmanHx != null : "fx:id=\"lbHuffmanHx\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbHuffmanK != null : "fx:id=\"lbHuffmanK\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbHuffmanP != null : "fx:id=\"lbHuffmanP\" was not injected: check your FXML file 'home.fxml'.";
+
         btnBegin.setOnMouseClicked(this::beginEncode);
     }
 
@@ -156,6 +198,11 @@ public class Home {
 
     private void beginEncode(MouseEvent event) {
         String s = editorInput.getText();
+
+        if("".equals(s)){
+            return;
+        }
+
         //检查是否全为数字
         boolean allNumber = true;
         char[] cs = s.toCharArray();
@@ -221,6 +268,10 @@ public class Home {
         colHuffmanCodes.setCellValueFactory(new PropertyValueFactory<>("codes"));
         colHuffmanLength.setCellValueFactory(new PropertyValueFactory<>("ki"));
         tabHuffman.setItems(huffmanData);
+
+        lbHuffmanHx.setText("信源熵：" + huffman.getHx());
+        lbHuffmanK.setText("平均码长：" + huffman.getK());
+        lbHuffmanP.setText("编码效率：" + huffman.getP() * 100);
     }
 
     /**
@@ -233,6 +284,10 @@ public class Home {
         colShannonLength.setCellValueFactory(new PropertyValueFactory<>("ki"));
         colShannonCodes.setCellValueFactory(new PropertyValueFactory<>("codes"));
         tabShannon.setItems(shannonData);
+
+        lbShannonHx.setText("信源熵：" + shannon.getHx());
+        lbShannonK.setText("平均码长：" + shannon.getK());
+        lbShannonP.setText("编码效率：" + shannon.getP() * 100);
     }
 
     /**
@@ -244,8 +299,11 @@ public class Home {
         colFanoCodes.setCellValueFactory(new PropertyValueFactory<>("codes"));
         colFanoLength.setCellValueFactory(new PropertyValueFactory<>("ki"));
         tabFano.setItems(fanoData);
-    }
 
+        lbFanoHx.setText("信源熵：" + fano.getHx());
+        lbFanoK.setText("平均码长：" + fano.getK());
+        lbFanoP.setText("编码效率：" + fano.getP() * 100);
+    }
 }
 
 

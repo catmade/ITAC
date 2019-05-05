@@ -1,5 +1,6 @@
 package coding.huffman;
 
+import coding.Code;
 import coding.Node;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.PriorityQueue;
  * @description 赫夫曼编码
  * @date 2019-04-21
  */
-public class Huffman {
+public class Huffman extends Code {
     private Node[] nodes;
 
     private List<Integer> help;
@@ -75,9 +76,7 @@ public class Huffman {
             nodes[i] = new Node(p[i], 0);
         }
         encodingHuffman();
-        for (Node node : nodes) {
-            node.ki = node.codes.length();
-        }
+        initData(nodes);
     }
 
     public Node[] getNodes() {
