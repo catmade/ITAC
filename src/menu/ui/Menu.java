@@ -1,5 +1,6 @@
 package menu.ui;
 
+import capacity.ui.Home;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -65,7 +66,7 @@ public class Menu {
             if (!channelStage.isShowing()) {
                 try {
                     channelStage.setScene(new Scene(FXMLLoader.load(
-                            channel.capacity.ui.Home.class.getResource("home.fxml"))));
+                            Home.class.getResource("home.fxml"))));
                     channelStage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
