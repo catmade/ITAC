@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @description 编码界面的控制类
  * @date 2019-05-05
  */
-public class Home {
+public class FirstWork {
 
     /**
      * 赫夫曼编码
@@ -151,38 +151,38 @@ public class Home {
 
     @FXML
     void initialize() {
-        assert btnBegin != null : "fx:id=\"btnBegin\" was not injected: check your FXML file 'home.fxml'.";
-        assert editorInput != null : "fx:id=\"editorInput\" was not injected: check your FXML file 'home.fxml'.";
-        assert warning != null : "fx:id=\"warning\" was not injected: check your FXML file 'home.fxml'.";
+        assert btnBegin != null : "fx:id=\"btnBegin\" was not injected: check your FXML file 'second.fxml'.";
+        assert editorInput != null : "fx:id=\"editorInput\" was not injected: check your FXML file 'second.fxml'.";
+        assert warning != null : "fx:id=\"warning\" was not injected: check your FXML file 'second.fxml'.";
 
-        assert tabHuffman != null : "fx:id=\"tabHuffman\" was not injected: check your FXML file 'home.fxml'.";
-        assert colHuffmanSymbol != null : "fx:id=\"colHuffmanSymbol\" was not injected: check your FXML file 'home.fxml'.";
-        assert colHuffmanP != null : "fx:id=\"colHuffmanP\" was not injected: check your FXML file 'home.fxml'.";
-        assert colHuffmanCodes != null : "fx:id=\"colHuffmanCodes\" was not injected: check your FXML file 'home.fxml'.";
-        assert colHuffmanLength != null : "fx:id=\"colHuffmanLength\" was not injected: check your FXML file 'home.fxml'.";
+        assert tabHuffman != null : "fx:id=\"tabHuffman\" was not injected: check your FXML file 'second.fxml'.";
+        assert colHuffmanSymbol != null : "fx:id=\"colHuffmanSymbol\" was not injected: check your FXML file 'second.fxml'.";
+        assert colHuffmanP != null : "fx:id=\"colHuffmanP\" was not injected: check your FXML file 'second.fxml'.";
+        assert colHuffmanCodes != null : "fx:id=\"colHuffmanCodes\" was not injected: check your FXML file 'second.fxml'.";
+        assert colHuffmanLength != null : "fx:id=\"colHuffmanLength\" was not injected: check your FXML file 'second.fxml'.";
 
-        assert tabFano != null : "fx:id=\"tabFano\" was not injected: check your FXML file 'home.fxml'.";
-        assert colFanoSymbol != null : "fx:id=\"colFanoSymbol\" was not injected: check your FXML file 'home.fxml'.";
-        assert colFanoP != null : "fx:id=\"colFanoP\" was not injected: check your FXML file 'home.fxml'.";
-        assert colFanoCodes != null : "fx:id=\"colFanoCodes\" was not injected: check your FXML file 'home.fxml'.";
-        assert colFanoLength != null : "fx:id=\"colFanoLength\" was not injected: check your FXML file 'home.fxml'.";
+        assert tabFano != null : "fx:id=\"tabFano\" was not injected: check your FXML file 'second.fxml'.";
+        assert colFanoSymbol != null : "fx:id=\"colFanoSymbol\" was not injected: check your FXML file 'second.fxml'.";
+        assert colFanoP != null : "fx:id=\"colFanoP\" was not injected: check your FXML file 'second.fxml'.";
+        assert colFanoCodes != null : "fx:id=\"colFanoCodes\" was not injected: check your FXML file 'second.fxml'.";
+        assert colFanoLength != null : "fx:id=\"colFanoLength\" was not injected: check your FXML file 'second.fxml'.";
 
-        assert tabShannon != null : "fx:id=\"tabShannon\" was not injected: check your FXML file 'home.fxml'.";
-        assert colShannonSymbol != null : "fx:id=\"colShannonSymbol\" was not injected: check your FXML file 'home.fxml'.";
-        assert colShannonP != null : "fx:id=\"colShannonP\" was not injected: check your FXML file 'home.fxml'.";
-        assert colShannonpa != null : "fx:id=\"colShannonpa\" was not injected: check your FXML file 'home.fxml'.";
-        assert colShannonLength != null : "fx:id=\"colShannonLength\" was not injected: check your FXML file 'home.fxml'.";
-        assert colShannonCodes != null : "fx:id=\"colShannonCodes\" was not injected: check your FXML file 'home.fxml'.";
+        assert tabShannon != null : "fx:id=\"tabShannon\" was not injected: check your FXML file 'second.fxml'.";
+        assert colShannonSymbol != null : "fx:id=\"colShannonSymbol\" was not injected: check your FXML file 'second.fxml'.";
+        assert colShannonP != null : "fx:id=\"colShannonP\" was not injected: check your FXML file 'second.fxml'.";
+        assert colShannonpa != null : "fx:id=\"colShannonpa\" was not injected: check your FXML file 'second.fxml'.";
+        assert colShannonLength != null : "fx:id=\"colShannonLength\" was not injected: check your FXML file 'second.fxml'.";
+        assert colShannonCodes != null : "fx:id=\"colShannonCodes\" was not injected: check your FXML file 'second.fxml'.";
 
-        assert lbShannonHx != null : "fx:id=\"lbShannonHx\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbShannonK != null : "fx:id=\"lbShannonK\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbShannonP != null : "fx:id=\"lbShannonP\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbFanoHx != null : "fx:id=\"lbFanoHx\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbFanoK != null : "fx:id=\"lbFanoK\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbFanoP != null : "fx:id=\"lbFanoP\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbHuffmanHx != null : "fx:id=\"lbHuffmanHx\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbHuffmanK != null : "fx:id=\"lbHuffmanK\" was not injected: check your FXML file 'home.fxml'.";
-        assert lbHuffmanP != null : "fx:id=\"lbHuffmanP\" was not injected: check your FXML file 'home.fxml'.";
+        assert lbShannonHx != null : "fx:id=\"lbShannonHx\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbShannonK != null : "fx:id=\"lbShannonK\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbShannonP != null : "fx:id=\"lbShannonP\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbFanoHx != null : "fx:id=\"lbFanoHx\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbFanoK != null : "fx:id=\"lbFanoK\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbFanoP != null : "fx:id=\"lbFanoP\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbHuffmanHx != null : "fx:id=\"lbHuffmanHx\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbHuffmanK != null : "fx:id=\"lbHuffmanK\" was not injected: check your FXML file 'second.fxml'.";
+        assert lbHuffmanP != null : "fx:id=\"lbHuffmanP\" was not injected: check your FXML file 'second.fxml'.";
 
         btnBegin.setOnMouseClicked(this::beginEncode);
     }

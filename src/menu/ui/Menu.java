@@ -1,6 +1,7 @@
 package menu.ui;
 
-import capacity.ui.Home;
+import capacity.ui.SecondWork;
+import coding.ui.FirstWork;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -54,7 +55,7 @@ public class Menu {
             if (!codingStage.isShowing()) {
                 try {
                     codingStage.setScene(new Scene(FXMLLoader.load(
-                            coding.ui.Home.class.getResource("home.fxml"))));
+                            FirstWork.class.getResource("first.fxml"))));
                     codingStage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -66,7 +67,8 @@ public class Menu {
             if (!channelStage.isShowing()) {
                 try {
                     channelStage.setScene(new Scene(FXMLLoader.load(
-                            Home.class.getResource("home.fxml"))));
+                            SecondWork.class.getResource("second.fxml"))));
+                    channelStage.setResizable(false);
                     channelStage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
