@@ -243,7 +243,7 @@ public class Channel {
 //        printMatrix("矩阵方程" ,matrix);
 //
 //        // 求解方程组
-//        pai = Matrix.getResult(matrix);
+//        pai = GF2Matrix.getResult(matrix);
 //
 //        // 判断信道容量是否存在，即p(ai)是否全部>=0，
 //        boolean exist = true;
