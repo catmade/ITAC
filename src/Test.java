@@ -1,5 +1,5 @@
 import capacity.Channel;
-import correct.GF2Matrix;
+import utils.Iteration;
 
 /**
  * @author Seven
@@ -42,7 +42,7 @@ public class Test {
         };
         int[] matrix7 = {1, 0, 1};
 
-        System.out.println(GF2Matrix.multiplyMod2(new GF2Matrix(matrix7), new GF2Matrix(matrix6)));
+        Iteration.iterate(matrix3);
         //double C = C(matrix2).getSpecialC();
         //System.out.println(C);
     }

@@ -35,13 +35,9 @@ public class Huffman extends Code {
             if (node1.getP() < node2.getP()) {
                 nodeParent.setLeft(node1);
                 nodeParent.setRight(node2);
-                node1.bcode = 0;
-                node2.bcode = 1;
             } else {
                 nodeParent.setLeft(node2);
                 nodeParent.setRight(node1);
-                node1.bcode = 1;
-                node2.bcode = 0;
             }
             pq.add(nodeParent);
         }

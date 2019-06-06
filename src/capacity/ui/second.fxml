@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capacity.ui.SecondWork">
+<AnchorPane prefHeight="341.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capacity.ui.SecondWork">
    <children>
-      <TextArea fx:id="taInput" layoutX="40.0" layoutY="60.0" prefHeight="144.0" prefWidth="280.0" text="0.125    0.25&#10;0.3       0.12 ">
+      <TextArea fx:id="taInput" layoutX="40.0" layoutY="60.0" prefHeight="144.0" prefWidth="190.0" text="0.5 .25 0 0.25&#10;0 1 0 0&#10;0 0 1 0&#10;0.25 0 0.25 0.5">
          <font>
             <Font size="16.0" />
          </font>
@@ -19,66 +19,16 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="btnAction" layoutX="453.0" layoutY="107.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="113.0" text="开始计算">
+      <Button fx:id="btnAction" layoutX="40.0" layoutY="244.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="113.0" text="开始计算">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Separator layoutX="260.0" layoutY="258.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="18.0" />
-      <Label layoutX="30.0" layoutY="231.0" prefHeight="20.0" text="结果：">
+      <Label layoutX="253.0" layoutY="28.0" prefHeight="20.0" text="结果：">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="30.0" layoutY="263.0" prefHeight="30.0" prefWidth="230.0" text="信道类别" textAlignment="CENTER">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="kind1" layoutX="30.0" layoutY="293.0" prefHeight="30.0" prefWidth="230.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="kind2" layoutX="30.0" layoutY="323.0" prefHeight="30.0" prefWidth="230.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="278.0" layoutY="267.0" prefHeight="22.0" prefWidth="113.0" text="信道容量">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="414.0" layoutY="267.0" prefHeight="20.0" text="耗时（毫秒）">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Separator layoutX="384.0" layoutY="258.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="18.0" />
-      <Separator layoutX="25.0" layoutY="290.0" prefHeight="10.0" prefWidth="500.0" />
-      <Separator layoutX="25.0" layoutY="320.0" prefHeight="10.0" prefWidth="500.0" />
-      <Separator layoutX="25.0" layoutY="350.0" prefHeight="10.0" prefWidth="500.0" />
-      <Separator layoutX="25.0" layoutY="260.0" prefHeight="10.0" prefWidth="500.0" />
-      <Label fx:id="c1" layoutX="278.0" layoutY="297.0" prefHeight="22.0" prefWidth="113.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="c2" layoutX="278.0" layoutY="327.0" prefHeight="22.0" prefWidth="113.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="time1" layoutX="414.0" layoutY="297.0" prefHeight="20.0" prefWidth="80.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="time2" layoutX="414.0" layoutY="327.0" prefHeight="20.0" prefWidth="80.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
+      <ListView fx:id="lvResult" layoutX="263.0" layoutY="60.0" prefHeight="246.0" prefWidth="315.0" style="-fx-font-size: 15;" />
    </children>
 </AnchorPane>

@@ -67,22 +67,22 @@
                                 </TableView>
                                 <Label fx:id="lbFanoHx" layoutY="398.0" prefHeight="30.0" prefWidth="160.0" text="信源熵：" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="lbFanoK" layoutX="200.0" layoutY="403.0" prefHeight="30.0" prefWidth="150.0" text="平均码长：" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="165.0">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="lbFanoP" layoutX="500.0" layoutY="398.0" prefHeight="30.0" prefWidth="140.0" text="编码效率：" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="315.0">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
                         <Label prefHeight="30.0" prefWidth="15.0" text="\%" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="455.0">
                            <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                            </font>
                         </Label>
                             </children>

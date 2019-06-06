@@ -201,6 +201,7 @@ public class GF2Matrix {
      * @return
      */
     public static int getMinDistance(GF2Matrix m) {
+        // TODO
         return 0;
     }
 
@@ -211,6 +212,7 @@ public class GF2Matrix {
      * @return 是否可逆
      */
     private static boolean reversible(GF2Matrix m) {
+        // TODO
         return false;
     }
 }

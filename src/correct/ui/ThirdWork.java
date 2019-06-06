@@ -63,10 +63,10 @@ public class ThirdWork {
     private TableView<Group.ErrorPattern> tabErrorPattern;
 
     @FXML
-    private Label lbCode;
+    private TextField tfReallyMsg;
 
     @FXML
-    private TextField tfReallyMsg;
+    private TextField tfCode;
 
     @FXML
     private Label lbCorrectMsg;
@@ -80,6 +80,7 @@ public class ThirdWork {
     @FXML
     void initialize() {
         assert tfReceive != null : "fx:id=\"tfReceive\" was not injected: check your FXML file 'third.fxml'.";
+        assert tfCode != null : "fx:id=\"tfCode\" was not injected: check your FXML file 'third.fxml'.";
         assert lbAdjoint != null : "fx:id=\"lbAdjoint\" was not injected: check your FXML file 'third.fxml'.";
         assert btnDecode != null : "fx:id=\"btnDecode\" was not injected: check your FXML file 'third.fxml'.";
         assert lbEstimate != null : "fx:id=\"lbEstimate\" was not injected: check your FXML file 'third.fxml'.";
@@ -90,7 +91,6 @@ public class ThirdWork {
         assert txaCheck != null : "fx:id=\"txaCheck\" was not injected: check your FXML file 'third.fxml'.";
         assert btnEncode != null : "fx:id=\"btnEncode\" was not injected: check your FXML file 'third.fxml'.";
         assert tabErrorPattern != null : "fx:id=\"tabErrorPattern\" was not injected: check your FXML file 'third.fxml'.";
-        assert lbCode != null : "fx:id=\"lbCode\" was not injected: check your FXML file 'third.fxml'.";
         assert tfReallyMsg != null : "fx:id=\"tfReallyMsg\" was not injected: check your FXML file 'third.fxml'.";
         assert lbCorrectMsg != null : "fx:id=\"lbCorrectMsg\" was not injected: check your FXML file 'third.fxml'.";
         assert colErrorPattern != null : "fx:id=\"colErrorPattern\" was not injected: check your FXML file 'third.fxml'.";
@@ -120,7 +120,7 @@ public class ThirdWork {
             int[] temp = getOneRowVector(tfReallyMsg.getText());
             GF2Matrix m = new GF2Matrix(temp);
             GF2Matrix c = GF2Matrix.multiplyMod2(m, group.getG());
-            lbCode.setText(c.toString());
+            tfCode.setText(c.toString());
         });
 
         btnDecode.setOnMouseClicked(event -> {
@@ -139,16 +139,10 @@ public class ThirdWork {
             // 判断接收向量是否为码字
             if (s.isZero()) {
                 lbIsError.setText("否");
+                lbCorrectMsg.setText(r.toString().substring(0, group.getK()));
             } else {
                 lbIsError.setText("是");
                 GF2Matrix e = group.getErrorPattern().get(s);
-                // TODO delete
-                Set<GF2Matrix> gf2Matrices = group.getErrorPattern().keySet();
-                for (GF2Matrix g : gf2Matrices) {
-                    System.out.println(g.toString() + "--" + g.hashCode() + "   " + (s.equals(g) ? "匹配" : "不匹配"));
-                }
-                System.out.println("\n" + s.toString() + "--" + s.hashCode());
-                // TODO delete
                 if (e == null) {
                     lbEstimate.setText("无法计算码字估值");
                     return;

@@ -50,7 +50,6 @@ public class Menu extends Application {
     @FXML
     private Button btnCalcChannel;
 
-
     @FXML
     private Button btnCorrect;
 
@@ -105,6 +104,7 @@ public class Menu extends Application {
                 }
             }
         });
+
     }
 
     @Override
@@ -113,11 +113,6 @@ public class Menu extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("《信息论与编码》程序设计");
         primaryStage.setResizable(false);
-        primaryStage.setOnCloseRequest(event -> {
-            codingStage.close();
-            channelStage.close();
-            correctStage.close();
-        });
         primaryStage.show();
     }
 

@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="correct.ui.ThirdWork">
    <children>
-      <TextArea fx:id="txaGen" layoutX="60.0" layoutY="62.0" prefHeight="150.0" prefWidth="180.0" text="1 0 0 0 1 0 1&#10;0 1 0 0 1 1 1&#10;0 0 1 0 1 1 0&#10;0 0 0 1 0 1 1">
+      <TextArea fx:id="txaGen" layoutX="60.0" layoutY="62.0" prefHeight="150.0" prefWidth="180.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -35,12 +35,12 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="tfReallyMsg" layoutX="541.0" layoutY="62.0" text="1011">
+      <TextField fx:id="tfReallyMsg" layoutX="541.0" layoutY="62.0">
          <font>
             <Font size="16.0" />
          </font>
       </TextField>
-      <TextField fx:id="tfReceive" layoutX="542.0" layoutY="247.0" text="1010000">
+      <TextField fx:id="tfReceive" layoutX="542.0" layoutY="247.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -56,11 +56,6 @@
          </font>
       </Button>
       <Label layoutX="541.0" layoutY="104.0" text="码字 c：">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbCode" layoutX="640.0" layoutY="104.0" prefHeight="22.0" prefWidth="115.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -145,5 +140,10 @@
             <Font size="28.0" />
          </font>
       </Label>
+      <TextField fx:id="tfCode" editable="false" layoutX="641.0" layoutY="98.0" prefWidth="115.0" style="-fx-background-color: transparent;">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

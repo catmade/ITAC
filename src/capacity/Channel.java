@@ -1,7 +1,6 @@
 package capacity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -12,24 +11,9 @@ import java.util.List;
 public class Channel {
 
     /**
-     * 特殊方法计算的信道容量
+     * 结果
      */
-    private double specialC = -1;
-
-    /**
-     * 特殊方法耗时
-     */
-    private long specialTime;
-
-    /**
-     * 用一般方法计算得出的信道容量
-     */
-    private double ordinaryC = -1;
-
-    /**
-     * 一般方法耗时
-     */
-    private long ordinaryTime;
+    private List<Result> results;
 
     /**
      * 信道容量单位
@@ -46,77 +30,6 @@ public class Channel {
      */
     private final int row, column;
 
-    private Kind[] kinds;
-
-    /**
-     * 信道种类
-     */
-    public enum Kind {
-        /**
-         * 一般信道
-         */
-        ordinary,
-
-        /**
-         * 离散无噪声信道，具有一一对应关系的无噪声信道
-         */
-        oneToOne,
-
-        /**
-         * 离散无噪声信道，具有扩展性能的无噪声信道
-         */
-        extensiable,
-
-        /**
-         * 离散无噪声信道，具有归并性能的无噪声信道
-         */
-        mergable,
-
-        /**
-         * 强对称离散信道
-         */
-        strong,
-
-        /**
-         * 对称离散信道
-         */
-        symmetry,
-
-        /**
-         * 准对称离散信道
-         */
-        quasi,
-
-        /**
-         * 无法计算的信道
-         */
-        none;
-
-        @Override
-        public String toString() {
-            switch (this) {
-                case ordinary:
-                    return "一般信道";
-                case oneToOne:
-                    return "具有一一对应关系的无噪声信道";
-                case extensiable:
-                    return "具有扩展性能的无噪声信道";
-                case mergable:
-                    return "具有归并性能的无噪声信道";
-                case strong:
-                    return "强对称离散信道";
-                case symmetry:
-                    return "对称离散信道";
-                case quasi:
-                    return "准对称离散信道";
-                case none:
-                    return "无法计算的信道";
-                default:
-                    return null;
-            }
-        }
-    }
-
     /**
      * 初始化信道矩阵
      *
@@ -128,36 +41,17 @@ public class Channel {
         this.row = row;
         this.column = column;
         this.p = new double[row][column];
+        results = new ArrayList<>();
         int index = 0;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 p[i][j] = ps[index++];
             }
         }
-        // TODO delete
-        printMatrix("信道矩阵", this.p);
         calcCapacity();
     }
 
-    private double getSpecialC() {
-        return specialC;
-    }
-
-    private Kind[] getKinds() {
-        return kinds;
-    }
-
-    public List<String[]> resultsToString() {
-        List<String[]> results = new ArrayList<>();
-        if (ordinaryC != -1){
-            results.add(new String[]{Kind.ordinary.toString(), ordinaryC + "", ordinaryTime + ""});
-        }
-        if (specialC != -1){
-            results.add(new String[]{kinds[0].toString(), specialC + "", specialTime + ""});
-        }
-        if (results.size() == 0){
-            return null;
-        }
+    public List<Result> getResults() {
         return results;
     }
 
@@ -165,156 +59,104 @@ public class Channel {
      * 计算信道容量
      */
     private void calcCapacity() {
-        kinds = getKind();
-        if (kinds.length == 1 && kinds[0] == Kind.none) {
-            return;
-        }
+        Kind[] kinds = getKind();
         for (Kind kind : kinds) {
-            Calendar timer = Calendar.getInstance();
-            switch (kind) {
-                case ordinary:
-                    calcOrdinary();
-                    break;
-                case oneToOne:
-                case extensiable:
-                    specialC = log2(row);
-                    break;
-                case mergable:
-                    specialC = log2(column);
-                    break;
-                case strong:
-                    double average = this.p[0][0];
-                    double p = 1 - average;
-                    p = solveDoubleTrap(p);
-                    specialC = log2(row) + average * log2(average) + p * log2(p / (row - 1));
-                    break;
-                case symmetry:
-                    specialC = log2(column) - H(this.p[0]);
-                    break;
-                case quasi:
-                    break;
-                default:
-            }
-            long time = Calendar.getInstance().getTimeInMillis() - timer.getTimeInMillis();
-            System.out.println("信道类型：" + kind);
-            if (kind == Kind.ordinary){
-                ordinaryTime = time;
-                System.out.println("信道容量：" + ordinaryC);
-                System.out.println("耗时：" + ordinaryTime);
-            } else if (kind != Kind.none){
-                specialTime = time;
-                System.out.println("信道容量：" + specialC);
-                System.out.println("耗时：" + specialTime);
-
+            if (kind == Kind.ordinary) {
+                results.add(calcOrdinary());
+            } else {
+                results.add(calcSpecial(kind));
             }
         }
     }
 
-///    private void calcOrdinary() {
-//        // 1.求βj
-//        double[] bj = new double[column];
-//
-//        // 2.求信道容量，
-//        double count = 0;
-//        for (double b : bj) {
-//            count += Math.pow(2, b);
-//        }
-//        specialC = log2(count);
-//
-//        // 3.求p(bj);
-//        double[] pbj = new double[column];
-//        for (int j = 0; j < pbj.length; j++) {
-//            pbj[j] = Math.pow(2, bj[j] - specialC);
-//        }
-//
-//        // 4.求p(ai)
-//        double[] pai = new double[row];
-//        // 构造方程组矩阵
-//        double[][] matrix = new double[column][row + 1];
-//        for (int i = 0; i < row; i++) {
-//            for (int j = 0; j < column; j++) {
-//                matrix[j][i] = this.p[i][j];
-//            }
-//        }
-//        for (int i = 0; i < matrix.length; i++){
-//            matrix[i][row] = pbj[i];
-//        }
-//        // TODO delete
-//        printMatrix("矩阵方程" ,matrix);
-//
-//        // 求解方程组
-//        pai = GF2Matrix.getResult(matrix);
-//
-//        // 判断信道容量是否存在，即p(ai)是否全部>=0，
-//        boolean exist = true;
-//        for (double p : pai) {
-//            if (p < 0) {
-//                exist = false;
-//                break;
-//            }
-//        }
-//
-//        // 如果不存在，调整p(ai)，再重新求解
-//        if (!exist) {
-//
-//        }
-///    }
-
     /**
-     * 求一般的情况
+     * 求一般信道的容量
+     *
+     * @return 计算结果
      */
-    private void calcOrdinary() {
-
-        // 具体的迭代方法
+    private Result calcOrdinary() {
+        // 输入符号xi的概率
         double[] p = new double[row];
-
-        double[] q = new double[row];
-
+        // 反条件概率，即接收为yj的情况下发送为xi的概率，q(xi|yj) = r(xi)r(yj|xi) /
+        double[] q = new double[column];
         double[] a = new double[row];
 
         double u = 0;
-
         double iu = 0;
         double e = 1;
         double c = 0;
 
+        double channel;
+        int iteratorTime = 0;
+        long timer = System.nanoTime();
+
         do {
-
-            // 1.求βj
-            for (int i = 0; i < p.length; i++) {
-                p[i] = 1.0 / p.length;
-            }
-
+            iteratorTime++;
+            // 假定初始概率分布为均匀分布
             for (int i = 0; i < row; i++) {
-                for (int j = 0; j < this.p[i].length; j++) {
-                    q[i] += p[i] * this.p[j][i];
+                p[i] = 1.0 / row;
+            }
+            // 计算反条件概率
+            for (int i = 0; i < column; i++) {
+                for (int j = 0; j < row; j++) {
+                    q[i] += p[j] * this.p[j][i];
                 }
             }
-
-            for (int i = 0; i < row; i++) {
+            for (int i = 0; i < a.length; i++) {
                 a[i] = 1;
             }
-
+            // 计算中间值
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < column; j++) {
                     a[i] *= Math.pow(this.p[i][j] / q[j], this.p[i][j]);
                 }
             }
-
             for (int i = 0; i < row; i++) {
                 u += p[i] * a[i];
             }
-            ordinaryC = log2(u);
-
+            channel = log2(u);
             iu = log2(max(a));
-
-            c = iu - ordinaryC;
-
+            c = iu - channel;
             for (int i = 0; i < row; i++) {
                 p[i] = p[i] * a[i] / u;
             }
-
         } while (c > e);
+        long l = (System.nanoTime() - timer) / 100;
+        return new IteratorResult(Kind.ordinary, channel, l, iteratorTime, p);
+    }
+
+    /**
+     * 求特殊信道的信道容量
+     *
+     * @param kind 特殊信道的类别
+     * @return 计算结果
+     */
+    private Result calcSpecial(Kind kind) {
+        double c = 0;
+        long timer = System.nanoTime();
+        switch (kind) {
+            case oneToOne:
+            case extensiable:
+                c = log2(row);
+                break;
+            case mergable:
+                c = log2(column);
+                break;
+            case strong:
+                double average = this.p[0][0];
+                double p = 1 - average;
+                p = solveDoubleTrap(p);
+                c = log2(row) + average * log2(average) + p * log2(p / (row - 1));
+                break;
+            case symmetry:
+                c = log2(column) - H(this.p[0]);
+                break;
+            case quasi:
+                break;
+            default:
+        }
+        long time = (System.nanoTime() - timer) / 1000;
+        return new Result(kind, c, time);
     }
 
     /**
@@ -359,14 +201,7 @@ public class Channel {
         } else if (isQuasi()) {
             kinds.add(Kind.quasi);
         }
-
-        if (row == column) {
-            kinds.add(Kind.ordinary);
-        }
-
-        if (kinds.size() == 0) {
-            kinds.add(Kind.none);
-        }
+        kinds.add(Kind.ordinary);
         return (Kind[]) kinds.toArray(new Kind[kinds.size()]);
     }
 
@@ -453,23 +288,149 @@ public class Channel {
     }
 
     /**
-     * 打印矩阵
-     *
-     * @param title  标题
-     * @param matrix 矩阵
+     * 信道种类
      */
-    private void printMatrix(String title, double[][] matrix) {
-        // 打印矩阵
-        System.out.println("=============================" + title + "===========================");
-        String s = null;
-        for (double[] row : matrix) {
-            for (double n : row) {
-                s = String.format("%-7s", n);
-                System.out.print(s + " ");
+    public enum Kind {
+        /**
+         * 一般信道
+         */
+        ordinary,
+
+        /**
+         * 离散无噪声信道，具有一一对应关系的无噪声信道
+         */
+        oneToOne,
+
+        /**
+         * 离散无噪声信道，具有扩展性能的无噪声信道
+         */
+        extensiable,
+
+        /**
+         * 离散无噪声信道，具有归并性能的无噪声信道
+         */
+        mergable,
+
+        /**
+         * 强对称离散信道
+         */
+        strong,
+
+        /**
+         * 对称离散信道
+         */
+        symmetry,
+
+        /**
+         * 准对称离散信道
+         */
+        quasi;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case ordinary:
+                    return "一般信道";
+                case oneToOne:
+                    return "具有一一对应关系的无噪声信道";
+                case extensiable:
+                    return "具有扩展性能的无噪声信道";
+                case mergable:
+                    return "具有归并性能的无噪声信道";
+                case strong:
+                    return "强对称离散信道";
+                case symmetry:
+                    return "对称离散信道";
+                case quasi:
+                    return "准对称离散信道";
+                default:
+                    return null;
             }
-            System.out.println();
         }
-        System.out.println("============================================================================\n\n");
+    }
+
+    /**
+     * 结果类
+     */
+    public class Result {
+        /**
+         * 信道类别
+         */
+        private Kind kind;
+
+        /**
+         * 信道容量
+         */
+        private double c;
+
+        /**
+         * 耗时（微秒）
+         */
+        private long time;
+
+        public Result(Kind kind, double c, long time) {
+            this.kind = kind;
+            this.c = c;
+            this.time = time;
+        }
+
+        public Kind getKind() {
+            return kind;
+        }
+
+        public double getC() {
+            return c;
+        }
+
+        public long getT() {
+            return time;
+        }
+
+        @Override
+        public String toString() {
+            return "信道类别：" + kind + "\n" +
+                    "信道容量：" + String.format("%.4f", c) + unit + "\n" +
+                    "耗时:    " + time + "(微秒)" + "\n";
+        }
+    }
+
+    /**
+     * 迭代算法的结果
+     */
+    public class IteratorResult extends Result {
+        /**
+         * 如果使用迭代算法的话，会有迭代次数
+         */
+        private int iterator;
+
+        /**
+         * 最佳信源分布
+         */
+        private double[] p;
+
+        public IteratorResult(Kind kind, double c, long time, int iterator, double[] p) {
+            super(kind, c, time);
+            this.iterator = iterator;
+            this.p = p;
+        }
+
+        public int getIterator() {
+            return iterator;
+        }
+
+        public double[] getP() {
+            return p;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < p.length; i++) {
+                 s.append("p[").append(i + 1).append("] = ").append(p[i]).append("\n");
+            }
+            return super.toString() + "迭代次数：" + iterator + "\n" +
+                    "最佳信源分布：\n" + s.toString();
+        }
     }
 }
 
