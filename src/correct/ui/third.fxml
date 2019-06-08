@@ -25,7 +25,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextArea fx:id="txaSysGen" layoutX="282.0" layoutY="62.0" prefHeight="150.0" prefWidth="180.0" text="1 0 0 0 1 0 1&#10;0 1 0 0 1 1 1&#10;0 0 1 0 1 1 0&#10;0 0 0 1 0 1 1">
+      <TextArea fx:id="txaSysGen" editable="false" layoutX="282.0" layoutY="62.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: transparent;">
          <font>
             <Font size="16.0" />
          </font>
@@ -125,7 +125,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextArea fx:id="txaCheck" layoutX="60.0" layoutY="270.0" prefHeight="150.0" prefWidth="180.0" text="1 1 1 0 1 0 0&#10;0 1 1 1 0 1 0&#10;1 1 0 1 0 0 1">
+      <TextArea fx:id="txaCheck" editable="false" layoutX="60.0" layoutY="270.0" prefHeight="150.0" prefWidth="180.0" style="-fx-background-color: transparent;">
          <font>
             <Font size="16.0" />
          </font>
@@ -145,5 +145,15 @@
             <Font size="16.0" />
          </font>
       </TextField>
+      <Label fx:id="lbError" layoutX="542.0" layoutY="498.0" prefHeight="61.0" prefWidth="273.0" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="136.0" layoutY="218.0" rotate="90.0" text="➡">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

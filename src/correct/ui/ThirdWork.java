@@ -103,10 +103,22 @@ public class ThirdWork {
      */
     private void setOnClickListener() {
         btnInit.setOnMouseClicked(event -> {
+            txaSysGen.setText("");
+            txaCheck.setText("");
             String G = txaGen.getText();
-            String SysG = txaSysGen.getText();
-            String H = txaCheck.getText();
-            group = new Group(getMultiRowsVector(SysG), getMultiRowsVector(H));
+            if ("".equals(G)){
+                return;
+            }
+            int[][] g = getMultiRowsMatrix(G);
+            group = new Group(g);
+            GF2Matrix gs = group.getGs();
+            if (gs == null){
+                txaGen.setText(group.getG().toString());
+                txaCheck.setText(group.getH().toString());
+            } else {
+                txaSysGen.setText(gs.toString());
+                txaCheck.setText(group.getHs().toString());
+            }
             colErrorPattern.setCellValueFactory(new PropertyValueFactory<>("e"));
             colAdjoint.setCellValueFactory(new PropertyValueFactory<>("s"));
             ObservableList<Group.ErrorPattern> data = FXCollections.observableArrayList(group.getTabData());
@@ -117,7 +129,7 @@ public class ThirdWork {
             if (group == null) {
                 return;
             }
-            int[] temp = getOneRowVector(tfReallyMsg.getText());
+            int[] temp = getOneRowMatrix(tfReallyMsg.getText());
             GF2Matrix m = new GF2Matrix(temp);
             GF2Matrix c = GF2Matrix.multiplyMod2(m, group.getG());
             tfCode.setText(c.toString());
@@ -132,7 +144,7 @@ public class ThirdWork {
             if (group == null) {
                 return;
             }
-            int[] temp = getOneRowVector(tfReceive.getText());
+            int[] temp = getOneRowMatrix(tfReceive.getText());
             GF2Matrix r = new GF2Matrix(temp);
             GF2Matrix s = GF2Matrix.multiplyMod2(r, GF2Matrix.transpose(group.getH()));
             lbAdjoint.setText(s.toString());
@@ -162,7 +174,7 @@ public class ThirdWork {
      * @param text 文本
      * @return 单行矩阵
      */
-    private int[] getOneRowVector(String text) {
+    private int[] getOneRowMatrix(String text) {
         int[] result = new int[text.length()];
         for (int i = 0; i < result.length; i++) {
             result[i] = Integer.parseInt(String.valueOf(text.charAt(i)));
@@ -176,7 +188,7 @@ public class ThirdWork {
      * @param text 文本
      * @return 多行矩阵
      */
-    private int[][] getMultiRowsVector(String text) {
+    private int[][] getMultiRowsMatrix(String text) {
         int row = 1, column;
         for (Character c : text.toCharArray()) {
             if (c == '\n') {

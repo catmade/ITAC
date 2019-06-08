@@ -13,14 +13,24 @@ import java.util.Map;
 public class Group {
 
     /**
+     * (n, k)线性分组码的生成矩阵
+     */
+    private GF2Matrix G;
+
+    /**
      * (n, k)线性分组码的系统生成矩阵
      */
-    private final GF2Matrix G;
+    private GF2Matrix Gs;
 
     /**
      * 校验矩阵 G乘H的转置 = 0
      */
-    private final GF2Matrix H;
+    private GF2Matrix H;
+
+    /**
+     * 系统校验矩阵 G乘H的转置 = 0
+     */
+    private GF2Matrix Hs;
 
     /**
      * 码字长度和信息向量长度
@@ -66,20 +76,84 @@ public class Group {
         return G;
     }
 
+    public GF2Matrix getGs() {
+        return Gs;
+    }
+
     public GF2Matrix getH() {
         return H;
     }
 
+    public GF2Matrix getHs() {
+        return Hs;
+    }
+
     /**
-     *
      * @param G 生成矩阵
      */
     public Group(int[][] G) {
         this.G = new GF2Matrix(G);
         this.n = this.G.getColumn();
         this.k = this.G.getRow();
-        this.H = null; // TODO
+        System.out.println("输入的矩阵：\n" + this.G);
+        tryToGenerateGs();
+        generateH();
         generateErrorPattern();
+    }
+
+    /**
+     * 生成校验矩阵
+     */
+    private void generateH() {
+        GF2Matrix g = (Gs == null ? G : Gs);
+        int[][] G = g.getG();
+        int row = G.length;
+        int column = G[0].length;
+        // 校验矩阵，前几列位I，后几列为单位矩阵
+        int[][] H = new int[column - row][column];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column - row; j++) {
+                H[j][i] = G[i][row + j];
+            }
+        }
+        for (int i = 0; i < column - row; i++) {
+            for (int j = 0; j < column - row; j++) {
+                H[i][row + j] = i == j ? 1 : 0;
+            }
+        }
+
+        if (this.Hs == null) {
+            this.H = new GF2Matrix(H);
+            System.out.println("生成矩阵：" + this.H);
+        } else {
+            this.Hs = new GF2Matrix(H);
+            System.out.println("系统生成矩阵：" + this.Hs);
+        }
+    }
+
+    /**
+     * 尝试将矩阵化简为系统生成矩阵
+     */
+    private void tryToGenerateGs() {
+        // 判断是否可以化简为系统生成矩阵
+        int[][] simplified = GF2Matrix.simplify(G).getG();
+        boolean canBeSimplified = true;
+        for (int i = 0; i < simplified.length; i++) {
+            for (int j = 0; j < simplified.length; j++) {
+                if (i == j && simplified[i][j] == 1) {
+                    continue;
+                }
+                if (i != j && simplified[i][j] == 0) {
+                    continue;
+                }
+                canBeSimplified = false;
+                break;
+            }
+        }
+        System.out.println("化简后的矩阵\n" + new GF2Matrix(simplified));
+        if (canBeSimplified) {
+            Gs = new GF2Matrix(simplified);
+        }
     }
 
     public List<ErrorPattern> getTabData() {
@@ -115,8 +189,8 @@ public class Group {
         GF2Matrix s, e;
         for (int i = 0; i <= n; i++) {
             int[] a = new int[n];
-            if (i != 0){
-                a[i-1] = 1;
+            if (i != 0) {
+                a[i - 1] = 1;
             }
             e = new GF2Matrix(a);
             s = GF2Matrix.multiplyMod2(e, GF2Matrix.transpose(this.H));
@@ -145,7 +219,7 @@ public class Group {
     /**
      * bean类，填充表格的数据
      */
-    public class ErrorPattern{
+    public class ErrorPattern {
         /**
          * 伴随式
          */
@@ -164,7 +238,7 @@ public class Group {
             return e;
         }
 
-        public ErrorPattern(GF2Matrix s, GF2Matrix e){
+        public ErrorPattern(GF2Matrix s, GF2Matrix e) {
             this.s = s;
             this.e = e;
         }

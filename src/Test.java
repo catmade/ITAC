@@ -1,5 +1,5 @@
 import capacity.Channel;
-import utils.Iteration;
+import correct.GF2Matrix;
 
 /**
  * @author Seven
@@ -41,10 +41,19 @@ public class Test {
                 {0, 0, 1, 1}
         };
         int[] matrix7 = {1, 0, 1};
+        int[][] g = {
+                {1, 0, 0, 0, 1},
+                {0, 1, 0, 1, 1},
+                {0, 0, 1, 1, 1}
+        };
+        int[][] h = {
+                {0, 1, 1, 1, 0},
+                {1, 1, 1, 0, 1}
+        };
 
-        Iteration.iterate(matrix3);
-        //double C = C(matrix2).getSpecialC();
-        //System.out.println(C);
+        GF2Matrix G = new GF2Matrix(g);
+        GF2Matrix H = new GF2Matrix(h);
+        System.out.println(GF2Matrix.multiplyMod2(G, GF2Matrix.transpose(H)).isZero());
     }
 
     private static Channel C(double[][] matrix) {

@@ -83,7 +83,7 @@ public class GF2Matrix {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        if (row == 1){
+        if (row == 1) {
             for (int i = 0; i < column; i++) {
                 result.append(g[0][i]);
             }
@@ -192,6 +192,99 @@ public class GF2Matrix {
             }
         }
         return new GF2Matrix(cs);
+    }
+
+    /**
+     * 将矩阵化为行最简式
+     *
+     * @param g 矩阵
+     * @return 行最简式
+     */
+    public static GF2Matrix simplify(final GF2Matrix g) {
+        int[][] raw = g.getG();
+        int[][] m = new int[raw.length][raw[0].length];
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[0].length; j++) {
+                m[i][j] = raw[i][j];
+            }
+        }
+        int row = m.length;
+        int column = m[0].length;
+
+        int[][] result = m;
+
+        // j为第i行的第j个不为0个位置
+        int j = 0;
+
+        int i1 = 0;
+        // 倍率
+        int rate;
+
+        // 初步化简矩阵
+        for (int i = 0; i < row; i++) {
+            j = 0;
+            while (j < column) {
+                if (result[i][j] != 0) {
+                    break;
+                }
+                j += 1;
+            }
+            if (j < column) {
+                i1 = 0;
+                while (i1 < row) {
+                    if (result[i1][j] != 0 && i1 != i) {
+                        rate = result[i][j] / result[i1][j];
+                        for (int j1 = 0; j1 < column; j1++) {
+                            result[i1][j1] = (result[i][j1] - result[i1][j1] * rate + 2) % 2;
+                        }
+                    }
+                    i1 += 1;
+                }
+            }
+        }
+
+        // 判断是否可化为行最简式
+        boolean canBeSymlified = true;
+        int[] a = new int[row];
+        for (int i = 0; i < a.length; i++) {
+            for (int k = 0; k < row; k++) {
+                a[i] += result[k][i];
+            }
+            if (a[i] != 1) {
+                canBeSymlified = false;
+                break;
+            }
+        }
+        if (!canBeSymlified) {
+            return new GF2Matrix(raw);
+        }
+
+        // 将矩阵的转换成合适的行最简式
+        for (int i = 0; i < row - 1; i++) {
+            int k;
+            for (k = 0; k < row; k++) {
+                if (result[k][i] == 1) {
+                    break;
+                }
+            }
+            result = exchangeRow(result, i, k);
+        }
+        return new GF2Matrix(result);
+    }
+
+    /**
+     * 交换矩阵的第i行和第j行数据
+     *
+     * @param g 矩阵
+     * @param i 第i行
+     * @param j 第j行
+     * @return 交换后的矩阵
+     */
+    private static int[][] exchangeRow(int[][] g, int i, int j) {
+        int[] temp = g[i];
+        g[i] = g[j];
+        g[j] = temp;
+        return g;
     }
 
     /**
