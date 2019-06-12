@@ -122,12 +122,12 @@ public class Group {
             }
         }
 
-        if (this.Hs == null) {
+        if (this.Gs == null) {
             this.H = new GF2Matrix(H);
-            System.out.println("生成矩阵：" + this.H);
+            System.out.println("生成矩阵：\n" + this.H);
         } else {
             this.Hs = new GF2Matrix(H);
-            System.out.println("系统生成矩阵：" + this.Hs);
+            System.out.println("系统生成矩阵：\n" + this.Hs);
         }
     }
 
@@ -186,6 +186,7 @@ public class Group {
     private void generateErrorPattern() {
         errorPattern = new HashMap<>(16);
         tabData = new ArrayList<>();
+        GF2Matrix H = this.Gs == null ? this.H : this.Hs;
         GF2Matrix s, e;
         for (int i = 0; i <= n; i++) {
             int[] a = new int[n];
@@ -193,7 +194,7 @@ public class Group {
                 a[i - 1] = 1;
             }
             e = new GF2Matrix(a);
-            s = GF2Matrix.multiplyMod2(e, GF2Matrix.transpose(this.H));
+            s = GF2Matrix.multiplyMod2(e, GF2Matrix.transpose(H));
             errorPattern.put(s, e);
             tabData.add(new ErrorPattern(s, e));
         }

@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author Seven
@@ -22,6 +23,16 @@ public class ThirdWork {
      * 线性分组码
      */
     private Group group;
+
+    /**
+     * 匹配矩阵的正则表达式
+     */
+    private static final Pattern MATRIX_FORMAT = Pattern.compile("^[0|1|\\s+]+$");
+
+    /**
+     * 匹配空白符的正则表达式
+     */
+    private static final Pattern BLANKSPACE_FORMAT = Pattern.compile("^[\\s+]$");
 
     @FXML
     private ResourceBundle resources;
@@ -106,15 +117,16 @@ public class ThirdWork {
             txaSysGen.setText("");
             txaCheck.setText("");
             String G = txaGen.getText();
-            if ("".equals(G)){
+            int[][] g = getMultiRowsMatrix(G);
+            if (g == null){
                 return;
             }
-            int[][] g = getMultiRowsMatrix(G);
             group = new Group(g);
             GF2Matrix gs = group.getGs();
-            if (gs == null){
-                txaGen.setText(group.getG().toString());
+            // 如果没有系统生成矩阵
+            if (gs == null) {
                 txaCheck.setText(group.getH().toString());
+                txaGen.setText(group.getG().toString());
             } else {
                 txaSysGen.setText(gs.toString());
                 txaCheck.setText(group.getHs().toString());
@@ -131,6 +143,8 @@ public class ThirdWork {
             }
             int[] temp = getOneRowMatrix(tfReallyMsg.getText());
             GF2Matrix m = new GF2Matrix(temp);
+            // 如果有系统生成矩阵，则使用系统生成矩阵生成码字
+            GF2Matrix g = group.getGs() == null ? group.getG() : group.getGs();
             GF2Matrix c = GF2Matrix.multiplyMod2(m, group.getG());
             tfCode.setText(c.toString());
         });
@@ -146,7 +160,9 @@ public class ThirdWork {
             }
             int[] temp = getOneRowMatrix(tfReceive.getText());
             GF2Matrix r = new GF2Matrix(temp);
-            GF2Matrix s = GF2Matrix.multiplyMod2(r, GF2Matrix.transpose(group.getH()));
+            // 如果存在系统生成矩阵，则说明存在系统校验矩阵，则使用系统校验矩阵校验
+            GF2Matrix h = group.getGs() == null ? group.getH() : group.getHs();
+            GF2Matrix s = GF2Matrix.multiplyMod2(r, GF2Matrix.transpose(h));
             lbAdjoint.setText(s.toString());
             // 判断接收向量是否为码字
             if (s.isZero()) {
@@ -189,6 +205,16 @@ public class ThirdWork {
      * @return 多行矩阵
      */
     private int[][] getMultiRowsMatrix(String text) {
+        // 如果字符串不满足格式，则返回null
+        if (!MATRIX_FORMAT.matcher(text).matches()) {
+            System.out.println("输入格式错误");
+            return null;
+        }
+
+        // 去掉字符串最后的所有空字符
+        while (BLANKSPACE_FORMAT.matcher(text.substring(text.length() - 1)).matches()) {
+            text = text.substring(0, text.length() - 1);
+        }
         int row = 1, column;
         for (Character c : text.toCharArray()) {
             if (c == '\n') {
