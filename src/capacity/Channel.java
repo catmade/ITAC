@@ -1,6 +1,7 @@
 package capacity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -208,45 +209,172 @@ public class Channel {
         return (Kind[]) kinds.toArray(new Kind[kinds.size()]);
     }
 
-    private boolean isQuasi() {
-        return false;
-    }
-
-    private boolean isSymmetry() {
-        return false;
-    }
-
-    private boolean isStrong() {
-        if (row == column) {
-
+    //判断元素是否属于数组
+    private boolean isBelong(List p,double x){
+        for (int i = 0; i <p.size(); i++) {
+            if(x==(double)p.get(i))
+                return true;
         }
         return false;
     }
 
-    private boolean isMergable() {
+    //转置矩阵
+    private double[][] reverseArray(double temp [][]) {
+        double[][] p1=new double[temp[0].length][temp.length];
+        for (int i = 0; i < temp.length; i++) {
+            for (int j = 0; j < temp[i].length; j++) {
+                p1[j][i]=temp[i][j];
+            }
+        }
+        return  p1;
+    }
+
+
+    private boolean isQuasi() {
+        //行可排列性
+        List<Double> listR = new ArrayList<>();
+        for (int i = 1; i < row; i++) {
+            for (int k = 0; k < p[0].length; k++) {
+                listR.add(p[0][k]);
+            }
+            for (int j = 0; j < column; j++) {
+                if (isBelong(listR, p[i][j])) {
+                    listR.remove(p[i][j]);
+                } else
+                    return false;
+            }
+        }
         return false;
     }
 
+
+    private boolean isSymmetry() {
+        double[][] p1=reverseArray(p);
+        //建立集合判断
+        List<Double> listR = new ArrayList<>();
+        List<Double> listC = new ArrayList<>();
+        //行可排列性
+        for (int i = 1; i < row; i++) {
+            for (int k = 0; k < p[0].length; k++) {
+                listR.add(p[0][k]);
+            }
+            for (int j = 0; j < column; j++) {
+                if(isBelong(listR,p[i][j])){
+                    listR.remove(p[i][j]);
+                }
+                else
+                    return false;
+            }
+        }
+        //列可排列性
+        for (int i = 1; i < column; i++) {
+            for (int k = 0; k < p1[0].length; k++) {
+                listC.add(p1[0][k]);
+            }
+            for (int j = 0; j < row; j++) {
+                if(isBelong(listC,p[j][i])){
+                    listC.remove(p[j][i]);
+                }
+                else
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isStrong() {
+        if(column!=row)
+            return false;
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
+                if(i==j){
+                    if(p[i][j]!=p[0][0])
+                        return false;
+                }
+                else{
+                    if(p[i][j]!=p[0][1])
+                        return false;
+                }
+            }
+        }
+        double sum=0;
+        for (int i = 0; i < column; i++) {
+            sum+=p[0][i];
+        }
+        if(Math.abs(sum-1)>0.0000001)
+            return false;
+        return true;
+    }
+
+    private boolean isMergable() {
+        int cnt;
+        //判断矩阵是否由0、1组成
+        for (int i = 0; i <column ; i++) {
+            for (int j = 0; j <row ; j++) {
+                if(p[j][i]!=0&&p[j][i]!=1)
+                    return false;
+            }
+        }
+        for (int i=0;i<column;i++){
+            cnt=0;
+            for (int j=0;j<row;j++){
+                if(p[j][i]==1)
+                    cnt++;
+            }
+            if(cnt<1)
+                return false;
+        }
+        for (int i = 0; i <row ; i++) {
+            cnt=0;
+            for (int j = 0; j <column ; j++) {
+                if(p[i][j]==1)
+                    cnt++;
+            }
+            if(cnt!=1)
+                return false;
+        }
+        return true;
+    }
+
     private boolean isExtensiable() {
+        int cnt;
+        for (int i=0;i<column;i++){
+            cnt=0;
+            for (int j=0;j<row;j++){
+                if(p[j][i]!=0)
+                    cnt++;
+            }
+            if(cnt!=1)
+                return false;
+        }
         return true;
     }
 
     private boolean isOneToOne() {
-        if (row == column) {
-            // 矩阵的某一行的概率和
-            double count;
-            for (int i = 0; i < row; i++) {
-                count = 0;
-                for (double d : p[i]) {
-                    count += d;
-                }
-                count = solveDoubleTrap(column);
-                if (!(count == 1 && p[i][i] == 1)) {
+        //判断矩阵是否由0、1组成
+        for (int i = 0; i <column ; i++) {
+            for (int j = 0; j <row ; j++) {
+                if(p[j][i]!=0&&p[j][i]!=1)
                     return false;
+            }
+        }
+        if(p[0][0]==1) {
+            for (int i = 0; i < column; i++) {
+                for (int j = 0; j < row; j++) {
+                    if(i==j&&p[j][i]!=1)
+                        return false;
                 }
             }
         }
-        return false;
+        else {
+            for (int i = 0; i < column; i++) {
+                for (int j = row - 1; j >= 0; j--) {
+                    if (((i + j) == row-1) && (p[j][i] != 1))
+                        return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
