@@ -212,8 +212,9 @@ public class Channel {
     //判断元素是否属于数组
     private boolean isBelong(List p,double x){
         for (int i = 0; i <p.size(); i++) {
-            if(x==(double)p.get(i))
+            if(x==(double)p.get(i)) {
                 return true;
+            }
         }
         return false;
     }
@@ -311,27 +312,32 @@ public class Channel {
         //判断矩阵是否由0、1组成
         for (int i = 0; i <column ; i++) {
             for (int j = 0; j <row ; j++) {
-                if(p[j][i]!=0&&p[j][i]!=1)
+                if(p[j][i]!=0&&p[j][i]!=1) {
                     return false;
+                }
             }
         }
         for (int i=0;i<column;i++){
             cnt=0;
             for (int j=0;j<row;j++){
-                if(p[j][i]==1)
+                if(p[j][i]==1) {
                     cnt++;
+                }
             }
-            if(cnt<1)
+            if(cnt<1) {
                 return false;
+            }
         }
         for (int i = 0; i <row ; i++) {
             cnt=0;
             for (int j = 0; j <column ; j++) {
-                if(p[i][j]==1)
+                if(p[i][j]==1) {
                     cnt++;
+                }
             }
-            if(cnt!=1)
+            if(cnt!=1) {
                 return false;
+            }
         }
         return true;
     }
@@ -341,11 +347,13 @@ public class Channel {
         for (int i=0;i<column;i++){
             cnt=0;
             for (int j=0;j<row;j++){
-                if(p[j][i]!=0)
+                if(p[j][i]!=0) {
                     cnt++;
+                }
             }
-            if(cnt!=1)
+            if(cnt!=1) {
                 return false;
+            }
         }
         return true;
     }
@@ -354,23 +362,26 @@ public class Channel {
         //判断矩阵是否由0、1组成
         for (int i = 0; i <column ; i++) {
             for (int j = 0; j <row ; j++) {
-                if(p[j][i]!=0&&p[j][i]!=1)
+                if(p[j][i]!=0&&p[j][i]!=1) {
                     return false;
+                }
             }
         }
         if(p[0][0]==1) {
             for (int i = 0; i < column; i++) {
                 for (int j = 0; j < row; j++) {
-                    if(i==j&&p[j][i]!=1)
+                    if(i==j&&p[j][i]!=1) {
                         return false;
+                    }
                 }
             }
         }
         else {
             for (int i = 0; i < column; i++) {
                 for (int j = row - 1; j >= 0; j--) {
-                    if (((i + j) == row-1) && (p[j][i] != 1))
+                    if (((i + j) == row-1) && (p[j][i] != 1)) {
                         return false;
+                    }
                 }
             }
         }
