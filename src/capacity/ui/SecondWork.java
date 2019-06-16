@@ -9,6 +9,7 @@ import javafx.scene.control.TextArea;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class SecondWork {
 
@@ -42,6 +43,10 @@ public class SecondWork {
         btnAction.setOnMouseClicked(event -> {
             lvResult.getItems().clear();
             String text = taInput.getText();
+            while (text.charAt(text.length() - 1) == '\n'){
+                text = text.substring(0, text.length() - 1);
+            }
+
             int row = 1, colunm;
             for (Character c : text.toCharArray()) {
                 if (c == '\n') {

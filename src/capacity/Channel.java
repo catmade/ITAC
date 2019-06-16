@@ -152,6 +152,9 @@ public class Channel {
                 c = log2(column) - H(this.p[0]);
                 break;
             case quasi:
+                double raw = 0;
+                // TODO
+                c = -raw - H(this.p[0]);
                 break;
             default:
         }

@@ -1,7 +1,5 @@
 package coding;
 
-import javafx.beans.property.StringProperty;
-
 /**
  * @description 概率模型的每个节点
  * @author Seven
