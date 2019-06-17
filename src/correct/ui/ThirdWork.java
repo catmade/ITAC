@@ -145,7 +145,7 @@ public class ThirdWork {
             GF2Matrix m = new GF2Matrix(temp);
             // 如果有系统生成矩阵，则使用系统生成矩阵生成码字
             GF2Matrix g = group.getGs() == null ? group.getG() : group.getGs();
-            GF2Matrix c = GF2Matrix.multiplyMod2(m, group.getG());
+            GF2Matrix c = GF2Matrix.multiplyMod2(m, g);
             tfCode.setText(c.toString());
         });
 
